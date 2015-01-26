@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Application">
+      <UniqueIdentifier>{a700e307-82f7-4e7b-a3dd-ad903ae45c4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{10565f88-faae-4f05-95d0-7a50c7b0f1d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\ChampionTypes">
+      <UniqueIdentifier>{b181cd5b-cc1f-444a-86fa-b057698571a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Display">
+      <UniqueIdentifier>{78928b77-fb5c-40a6-b45d-2f282e8e82bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{10cc21f0-7d75-42de-a12f-5947b74f2149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{7ce5af81-1ca4-4cd3-b56d-088e08de5896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\ChampionTypes">
+      <UniqueIdentifier>{f96f2ecf-5e47-4e69-be69-64d4f92768fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\ChampionControllers">
+      <UniqueIdentifier>{9ff64258-c08e-4d5e-949c-fb3cca4c19db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\ChampionControllers">
+      <UniqueIdentifier>{a424995a-4157-4f68-b109-568aece026cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Source Files\Game\ChampionTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="IKnightDisplayer.h">
+      <Filter>Header Files\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="ITimerParam.h">
+      <Filter>Header Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleDataKeeper.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesFilter.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Team.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Champion.cpp">
+      <Filter>Source Files\Game\ChampionTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameHolder.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ChampionFactory.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ChampionController.cpp">
+      <Filter>Source Files\Game\ChampionControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputerChampionController.cpp">
+      <Filter>Source Files\Game\ChampionControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerChampionController.cpp">
+      <Filter>Source Files\Game\ChampionControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyCatcher.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Knight.h">
+      <Filter>Header Files\Game\ChampionTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="IFilter.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleDataKeeper.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Champion.h">
+      <Filter>Header Files\Game\ChampionTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionQueue.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ChampionFactory.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesFilter.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEnums.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHolder.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Team.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="IChampionDisplayer.h">
+      <Filter>Header Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="Reinterpreter.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameDisplayer.h">
+      <Filter>Header Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="ChampionController.h">
+      <Filter>Header Files\Game\ChampionControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ComputerChampionController.h">
+      <Filter>Header Files\Game\ChampionControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerChampionController.h">
+      <Filter>Header Files\Game\ChampionControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithms.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCatcher.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardKeysEnum.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="IMenuDisplayer.h">
+      <Filter>Header Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuOptionsEnum.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="IDisplayer.h">
+      <Filter>Header Files\Display</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+</Project>
