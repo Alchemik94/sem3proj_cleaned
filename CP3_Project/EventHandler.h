@@ -46,9 +46,13 @@ namespace Application
 
 	class EventHandler
 	{
-		typedef void(*Function)(Object*, EventArgs*);
-		std::list<std::pair<int,const Function> > _functions;
-		std::list<std::pair<int,const EventHandler&> > _anotherHandlers;
+		private:
+			typedef void(*Function)(Object*, EventArgs*);
+			typedef void(*ObjectFunction)(Object*, EventArgs*,Object*);
+			std::list<std::pair<int,const Function> > _functions;
+			std::list<std::pair<int, std::pair<Object*, ObjectFunction> > > _objectFunctions;
+			std::list<std::pair<int,const EventHandler&> > _anotherHandlers;
+			int BiggestIndex();
 		public:
 			//Called when such an event occurs
 			void operator()(Object* sender, EventArgs* e) const;
@@ -58,6 +62,9 @@ namespace Application
 
 			//Adds another function to handle the event
 			const EventHandler& operator+=(const Function function);
+
+			//Adds another function connected with OOP object
+			const EventHandler& operator+=(std::pair<Object*, const ObjectFunction> objectAndFunction);
 
 			//Checks if the handlers are different
 			bool operator!=(const EventHandler& handler) const;
@@ -70,5 +77,8 @@ namespace Application
 
 			//Unregisters function from handler
 			const EventHandler& operator-=(const Function function);
+
+			//Unregusters function connected with OOP object from handler
+			const EventHandler& operator-=(std::pair<Object*,const ObjectFunction> objectAndFunction);
 	};
 }

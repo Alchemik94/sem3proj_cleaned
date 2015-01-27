@@ -86,6 +86,7 @@
     <ClCompile Include="KeyCatcher.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClInclude Include="Algorithms.h" />
+    <ClInclude Include="Converter.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="IDisplayer.h" />
     <ClInclude Include="IMenuDisplayer.h" />

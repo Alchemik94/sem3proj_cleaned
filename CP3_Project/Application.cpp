@@ -8,6 +8,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include "Converter.h"
 
 #ifdef _DEBUG
 #include <iostream>
@@ -111,6 +112,8 @@ namespace Application
 
 		srand(time(NULL));
 
+		Keys keyDown = Keys::NotAKey;
+
 		while (game->Running()) // GAMELOOP
 		{
 			ALLEGRO_EVENT ev;
@@ -118,51 +121,25 @@ namespace Application
 
 			if (ev.type == ALLEGRO_EVENT_KEY_DOWN) //if button is CLICKED
 			{
-				switch (ev.keyboard.keycode)
-				{
-				case ALLEGRO_KEY_ESCAPE: // if escape is catched
-					game->Catched(Keys::Escape);
-					game->Exit(); //Exits the game: is there point of catching it? Should go to pause menu? 
-					break;
-				case ALLEGRO_KEY_UP: //if up is catched
-					game->Catched(Keys::Up); // potential change of line, may be omitted if only 1 lane is to be implemented
-					break;
-				case ALLEGRO_KEY_DOWN: //if down is catched
-					game->Catched(Keys::Down); // potential change of line, may be omitted if only 1 lane is to be implemented
-					break;
-				case ALLEGRO_KEY_A: //if A is catched (move left starts)
-					game->Catched(Keys::A); // if 
-					break;
-				case ALLEGRO_KEY_D: //if D is catched (move right starts)
-					game->Catched(Keys::D);
-					break;
-				case ALLEGRO_KEY_SPACE: //if space is catched, attack key ?
-					game->Catched(Keys::Space);
-					break;
-				case ALLEGRO_KEY_ENTER: //if enter is catched 
-					game->Catched(Keys::Enter);
-					break;
-				}
+				keyDown = Converter::AllegroKeyToAscii(ev.keyboard.keycode);
 			}
 			else if (ev.type == ALLEGRO_EVENT_KEY_UP) //if button is UNCLICKED
 			{
-				switch (ev.keyboard.keycode)
-				{
-				case ALLEGRO_KEY_A: //if A (move left) is cancelled
-					game->Catched(Keys::A);
-					break;
-				case ALLEGRO_KEY_D: //if D (move right) is cancelled
-					game->Catched(Keys::D);
-					break;
-				}
+				keyDown = Keys::NotAKey;
 			}
 
+			if (keyDown != Keys::NotAKey)
+			{
+				game->Catched(keyDown);
+				if (keyDown == Keys::Escape)
+					keyDown = Keys::NotAKey;
+			}
 
-				if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) //close the application after clicking X on top-right corner of ALLEGRO window
-				{
-					//logic operation to close game
-					game->Exit();
-				}
+			if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) //close the application after clicking X on top-right corner of ALLEGRO window
+			{
+				//logic operation to close game
+				game->Exit();
+			}
 
 			else if (ev.type == ALLEGRO_EVENT_TIMER)
 			{
@@ -268,7 +245,7 @@ namespace Application
 		}
 		delete game;
 
-		al_destroy_font(arial18)
+		al_destroy_font(arial18);
 		al_destroy_display(display);
 		al_destroy_event_queue(event_queue);
 		al_destroy_timer(timer);

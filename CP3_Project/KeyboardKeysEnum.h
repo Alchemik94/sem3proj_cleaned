@@ -4,6 +4,7 @@ namespace Application
 {
 	const enum Keys
 	{
+		NotAKey = -1,
 		Backspace = 0x08,
 		Tab = 0x09,
 		Clear = 0x0C,
