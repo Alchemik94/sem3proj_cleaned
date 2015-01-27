@@ -35,9 +35,14 @@ namespace Application
 				KeepString("PauseMenuOption" + Game::PauseMenu::MenuOptionName(Game::MenuOption::NewGame), "New game");
 				KeepString("PauseMenuOption" + Game::PauseMenu::MenuOptionName(Game::MenuOption::Options), "Options");
 
+				KeepString("BackgroundImagePath", "background.png");
+				KeepString("MenuBackgroundPath", "menu.png");
+
 				//To change
 				SavePreset(Game::ReadyPreset::AIKnight, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+				SavePath(Game::ReadyPreset::AIKnight, "mob.png");
 				SavePreset(Game::ReadyPreset::PlayerKnight, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+				SavePath(Game::ReadyPreset::PlayerKnight, "champion.png");
 			}
 			~SingleDataKeeper();
 			static SingleDataKeeper* _instance;
@@ -94,6 +99,8 @@ namespace Application
 				int& movementSpeed,
 				int& range
 				);
+			void SavePath(Game::ReadyPreset preset,std::string path);
+			std::string LoadPath(Game::ReadyPreset preset);
 	};
 }
 

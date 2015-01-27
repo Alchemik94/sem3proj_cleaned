@@ -179,6 +179,9 @@
     <ClInclude Include="Converter.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\Display</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -33,7 +33,7 @@ namespace Game
 
 //TODO
 //Get rid of hardcode
-	GameHolder::GameHolder(int numberOfRounds)
+	GameHolder::GameHolder(int numberOfRounds) : IGameDisplayer(Application::SingleDataKeeper::Instance()->GetString("BackgroundImagePath"))
 	{
 		Show();
 		_team1 = new Team();

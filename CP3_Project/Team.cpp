@@ -36,6 +36,7 @@ namespace Game
 		vector<Champion*>::operator=(champions);
 		for (auto champion : *this)
 			FrameElapsed += champion->FrameElapsed;
+		return *this;
 	}
 
 	void Team::push_back(Champion* champion)

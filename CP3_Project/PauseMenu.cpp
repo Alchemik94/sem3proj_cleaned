@@ -6,7 +6,7 @@ namespace Game
 {
 //TODO
 //error throwing
-	PauseMenu::PauseMenu(Display::IGameDisplayer* gameholder, Application::KeyCatcher* masterKeyCatcher) : KeyCatcher(masterKeyCatcher)
+	PauseMenu::PauseMenu(Display::IGameDisplayer* gameholder, Application::KeyCatcher* masterKeyCatcher) : KeyCatcher(masterKeyCatcher), IMenuDisplayer(Application::SingleDataKeeper::Instance()->GetString("MenuBackgroundPath"))
 	{
 		_activeOption = GetOptions().begin();
 		if (dynamic_cast<GameHolder*>(gameholder) == NULL)

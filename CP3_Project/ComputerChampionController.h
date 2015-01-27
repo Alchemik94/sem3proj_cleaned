@@ -8,7 +8,7 @@
 
 namespace Game
 {
-	class ComputerChampionController :public ChampionController, Application::Object
+	class ComputerChampionController :public ChampionController, public Application::Object
 	{
 		private:
 			Team* _enemyTeam;

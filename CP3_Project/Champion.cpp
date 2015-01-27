@@ -14,27 +14,10 @@ namespace Game
 {
 	using namespace Application;
 
-	Champion::Champion()
+	Champion::Champion(ReadyPreset preset) : IChampionDisplayer(SingleDataKeeper::Instance()->LoadPath(preset))
 	{
 		_tillNextAttack = 0;
 		_displayed = false;
-		_attackSpeed = 0;
-		_basicDamage = 0;
-		_currentHealth = 0;
-		_currentPower = 0;
-		_distanceFromCastle = 0;
-		_experience = 0;
-		_lane = 0;
-		_level = 0;
-		_maximumHealth = 0;
-		_maximumPower = 0;
-		_movementSpeed = 0;
-		_range = 0;
-		FrameElapsed += std::make_pair(this, AttackCounterResetter);
-	}
-
-	Champion::Champion(ReadyPreset preset) : Champion()
-	{
 		Application::SingleDataKeeper::Instance()->LoadPreset(
 			preset,
 			_attackSpeed,
@@ -50,8 +33,8 @@ namespace Game
 			_movementSpeed,
 			_range
 			);
-
-		//
+		
+		FrameElapsed += std::make_pair(this, AttackCounterResetter);
 
 		DisplayOnMap();
 		_displayed = true;

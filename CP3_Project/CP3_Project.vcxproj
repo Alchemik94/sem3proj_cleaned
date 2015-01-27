@@ -122,6 +122,7 @@
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Reinterpreter.h" />
     <ClInclude Include="SingleDataKeeper.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Team.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>

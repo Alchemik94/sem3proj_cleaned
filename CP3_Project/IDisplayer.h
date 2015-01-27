@@ -1,8 +1,10 @@
 #pragma once
 
+#include "EventHandler.h"
+
 namespace Display
 {
-	class IDisplayer
+	class IDisplayer: Application::Object
 	{
 		public:
 			virtual void Show() = 0;

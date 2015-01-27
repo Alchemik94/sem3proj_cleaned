@@ -1,9 +1,6 @@
-#ifndef _SINGLE_DATA_KEEPER_INITIALIZER
-#define _SINGLE_DATA_KEEPER_INITIALIZER
-
+#include <string>
 #include "SingleDataKeeper.h"
 #include "Application.h"
-#include "Timer.h"
 
 using namespace std;
 
@@ -21,13 +18,11 @@ namespace Application
 	{
 		if (!_initialized)
 		{
-			LOCK_APPLICATION_VARIABLES(EmptyTimer::Instance()) NULL;
 			if (!_initialized)
 			{
 				_initialized = true;
 				_instance = new SingleDataKeeper();
 			}
-			UNLOCK_APPLICATION_VARIABLES;
 		}
 		return _instance;
 	}
@@ -102,6 +97,23 @@ namespace Application
 		movementSpeed = GetInt(name + "MovementSpeed");
 		range = GetInt(name + "Range");
 	}
-}
 
-#endif
+	void SingleDataKeeper::SavePath(Game::ReadyPreset preset, string path)
+	{
+		std::string name;
+		char* tmp = new char[20];
+		sprintf(tmp, "ReadyPreset%d", preset);
+		name = tmp;
+		delete[] tmp;
+		KeepString(name, path);
+	}
+	string SingleDataKeeper::LoadPath(Game::ReadyPreset preset)
+	{
+		std::string name;
+		char* tmp = new char[20];
+		sprintf(tmp, "ReadyPreset%d", preset);
+		name = tmp;
+		delete[] tmp;
+		return GetString(name);
+	}
+}

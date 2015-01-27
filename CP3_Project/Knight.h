@@ -6,7 +6,7 @@
 
 namespace Game
 {
-	class Knight :protected Display::IKnightDisplayer, public Champion
+	class Knight :public Display::IKnightDisplayer, public Champion
 	{
 		public:
 			//Knight attacks all enemies in range on his lane.

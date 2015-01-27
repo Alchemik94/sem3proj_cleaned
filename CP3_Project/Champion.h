@@ -10,7 +10,7 @@
 
 namespace Game
 {
-	class Champion: protected virtual Display::IChampionDisplayer, Application::Object
+	class Champion: public virtual Display::IChampionDisplayer, public Application::Object
 	{
 		private:
 			int _currentHealth,
@@ -38,9 +38,6 @@ namespace Game
 			//display methods caller
 			void DisplayChange(ChampionParameters param, TypeOfChange type, int change);
 			
-			//standard constructor which is internally used for primary initialization
-			Champion();
-
 			//Changes parameters on demand
 			void ChangeStatistics(ChampionParameters param, TypeOfChange type, int change);
 

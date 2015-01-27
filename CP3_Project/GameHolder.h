@@ -14,7 +14,7 @@
 
 namespace Game
 {
-	class GameHolder: public Display::IGameDisplayer, public Application::KeyCatcher, Application::Object
+	class GameHolder: public Display::IGameDisplayer, public Application::KeyCatcher, public Application::Object
 	{
 		private:
 			Team* _team1;
@@ -34,7 +34,6 @@ namespace Game
 			std::vector<ChampionController*> _team2Controllers;
 			virtual void CatchedKeyHandler(Application::Keys key);
 		public:
-			Application::EventHandler FrameElapsed;
 			GameHolder();
 			GameHolder(int numberOfRounds);
 			virtual ~GameHolder();
