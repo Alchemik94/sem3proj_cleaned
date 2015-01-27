@@ -4,21 +4,21 @@
 #include "Champion.h"
 #include <vector>
 #include "GameEnums.h"
-#include "Timer.h"
-#include "ITimerParam.h"
+#include "EventHandler.h"
 
 namespace Game
 {
-	class Team: public std::vector<Champion*>, public Application::ITimerParameter
+	class Team: public std::vector<Champion*>, public Application::Object
 	{
 		private:
-			Application::Timer _timer;
-			static void EraseDead(ITimerParameter* parameter);
-			bool _erasing;
-			bool _faulty;
+			static void EraseDead(Application::Object* sender, Application::EventArgs* e, Application::Object* instance);
 		public:
+			Application::EventHandler FrameElapsed;
+			void push_back(Champion* champion);
+			void clear();
+			void pop_back();
+			Team& operator=(vector<Champion*> champions);
 			Team();
-			Team(std::vector<Champion*> team);
 			~Team();
 	};
 

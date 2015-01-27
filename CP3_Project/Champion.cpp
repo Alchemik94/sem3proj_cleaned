@@ -6,7 +6,6 @@
 #include "SingleDataKeeper.h"
 #include "Application.h"
 #include "Reinterpreter.h"
-#include "Timer.h"
 
 #include <cstdio>
 #include <string>
@@ -15,10 +14,9 @@ namespace Game
 {
 	using namespace Application;
 
-	Champion::Champion() :_attackTimer(0, &Game::Champion::AttackCounterResetter, this), _moveHandlerTimer(0, &Game::Champion::MoveHandler, this)
+	Champion::Champion()
 	{
-		_actionQueue = ActionQueue<Action, Direction>();
-		_afterAttack = false;
+		_tillNextAttack = 0;
 		_displayed = false;
 		_attackSpeed = 0;
 		_basicDamage = 0;
@@ -32,11 +30,11 @@ namespace Game
 		_maximumPower = 0;
 		_movementSpeed = 0;
 		_range = 0;
+		FrameElapsed += std::make_pair(this, AttackCounterResetter);
 	}
 
 	Champion::Champion(ReadyPreset preset) : Champion()
 	{
-		LOCK_APPLICATION_VARIABLES(EmptyTimer::Instance());
 		Application::SingleDataKeeper::Instance()->LoadPreset(
 			preset,
 			_attackSpeed,
@@ -53,23 +51,15 @@ namespace Game
 			_range
 			);
 
-		_attackTimer = Application::Timer((int)(((float)1000) / ((float)_attackSpeed)), &Game::Champion::AttackCounterResetter,this);
-		_moveHandlerTimer = Application::Timer((int)(((float)1000) / ((float)_movementSpeed)), &Game::Champion::MoveHandler, this);
-
-		_attackTimer.Run();
-		_moveHandlerTimer.Run();
+		//
 
 		DisplayOnMap();
 		_displayed = true;
-		UNLOCK_APPLICATION_VARIABLES;
 	}
 
 	Champion::~Champion()
 	{
-		_attackTimer.Stop();
-		_moveHandlerTimer.Stop();
-		while (_wait) std::this_thread::yield();
-		while (_wait) std::this_thread::yield();
+		
 	}
 
 	int Champion::Modification(TypeOfChange type, int change)
@@ -194,7 +184,7 @@ namespace Game
 
 	void Champion::Attack(std::vector<Champion*>* enemies)
 	{
-		while (_afterAttack) std::this_thread::yield();
+		if (_tillNextAttack > 0) return;
 
 		EnemiesFilter* filter = static_cast<EnemiesFilter*>(CreateFilter());
 
@@ -206,30 +196,23 @@ namespace Game
 
 		if (filteredEnemies.size() > 0)
 		{
-			LOCK_APPLICATION_VARIABLES(EmptyTimer::Instance());
 			DisplayAttack(reinterpreter.Convert(filteredEnemies));
-			UNLOCK_APPLICATION_VARIABLES;
 		}
 
 		for (unsigned int i = 0; i < filteredEnemies.size(); ++i)
 		{
-			LOCK_APPLICATION_VARIABLES(EmptyTimer::Instance());
 			filteredEnemies[i]->DisplayBeingAttacked();
 			filteredEnemies[i]->ChangeStatistics(CurrentHealth, Loose, GetParameter(BasicDamage));
-			UNLOCK_APPLICATION_VARIABLES;
 		}
 
-		LOCK_APPLICATION_VARIABLES(EmptyTimer::Instance());
-		_afterAttack = true;
-		UNLOCK_APPLICATION_VARIABLES;
+		_tillNextAttack = (SingleDataKeeper::Instance()->GetInt("ticksPerSecond")/GetParameter(ChampionParameters::AttackSpeed));
 	}
 
-	void Champion::AttackCounterResetter(ITimerParameter* champ)
+	void Champion::AttackCounterResetter(Application::Object* sender, Application::EventArgs* e, Application::Object* instance)
 	{
-		Champion* champion = static_cast<Champion*>(champ);
-		LOCK_APPLICATION_VARIABLES(champion->_attackTimer);
-		champion->_afterAttack = false;
-		UNLOCK_APPLICATION_VARIABLES;
+		Champion* champion = static_cast<Champion*>(instance);
+		if (champion->_tillNextAttack>0)
+			--champion->_tillNextAttack;
 	}
 
 	bool Champion::IsAlive()
@@ -239,27 +222,16 @@ namespace Game
 
 	void Champion::Move(Direction direction)
 	{
-		LOCK_APPLICATION_VARIABLES(EmptyTimer::Instance());
-		_actionQueue.Push(Action::Move, direction);
-		UNLOCK_APPLICATION_VARIABLES;
-	}
-
-	void Champion::MoveHandler(ITimerParameter* champ)
-	{
-		Champion* champion = static_cast<Champion*>(champ);
-		if (champion->_actionQueue.IsEmpty())
-			return;
-		LOCK_APPLICATION_VARIABLES(champion->_moveHandlerTimer);
-		std::pair<Action, Direction> top = champion->_actionQueue.Pop();
-		UNLOCK_APPLICATION_VARIABLES;
-		if (top.first != Action::Move)
-			return;
-		ChampionParameters param = DirectionToParams(top.second).first;
-		TypeOfChange type = DirectionToParams(top.second).second;
-
-		LOCK_APPLICATION_VARIABLES(champion->_moveHandlerTimer);
-		champion->ChangeStatistics(param, type, 1);
-		UNLOCK_APPLICATION_VARIABLES;
+		if (direction == Direction::Down && GetParameter(ChampionParameters::Lane) == SingleDataKeeper::Instance()->GetInt("numberOfLanes"))
+		{
+			//do nothing
+		}
+		else if (direction == Direction::Up && GetParameter(ChampionParameters::Lane) == 1)
+		{
+			//do nothing
+		}
+		else
+			ChangeStatistics(DirectionToParams(direction).first, DirectionToParams(direction).second, 1);
 	}
 
 	std::pair<ChampionParameters, TypeOfChange> Champion::DirectionToParams(Direction direction)

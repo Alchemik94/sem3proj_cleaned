@@ -73,7 +73,7 @@ namespace Game
 	std::vector<MenuOption>& PauseMenu::GetOptions()
 	{
 		static std::vector<MenuOption> result{
-										MenuOption::Continue,
+										//MenuOption::Continue,
 										MenuOption::NewGame,
 										//MenuOption::Options,
 										//MenuOption::Credits,

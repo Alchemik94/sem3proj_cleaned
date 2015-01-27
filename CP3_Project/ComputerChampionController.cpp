@@ -5,49 +5,27 @@
 
 namespace Game
 {
-	ComputerChampionController::ComputerChampionController(Champion* controlledChampion, volatile bool* paused, Team* enemyTeam) : ChampionController(controlledChampion, paused)
+	ComputerChampionController::ComputerChampionController(Champion* controlledChampion, Team* enemyTeam) : ChampionController(controlledChampion)
 	{
 		_enemyTeam = enemyTeam;
 		_filter = controlledChampion->CreateFilter();
-		_timer = new Application::Timer(LowestSensiblePauseTime(controlledChampion), TakeTheAction, this);
-	}
-
-	unsigned int ComputerChampionController::LowestSensiblePauseTime(Champion* champion)
-	{
-		unsigned int gcd = Application::Gcd((int)((float)1 / (float)champion->GetParameter(ChampionParameters::AttackSpeed)), (int)((float)1 / (float)champion->GetParameter(ChampionParameters::MovementSpeed)));
-		if (gcd != 1)
-			return gcd;
-		int time = Application::Min(champion->GetParameter(ChampionParameters::AttackSpeed), champion->GetParameter(ChampionParameters::MovementSpeed));
-		if (time % 2 == 0)
-			return time / 2;
-		return time;
-	}
-
-	inline void ComputerChampionController::Start()
-	{
-		_timer->Run();
-	}
-
-	inline void ComputerChampionController::Stop()
-	{
-		_timer->Stop();
+		_controlledChampion->FrameElapsed += FrameElapsed;
+		FrameElapsed += std::make_pair(this, TakeTheAction);
 	}
 
 	ComputerChampionController::~ComputerChampionController()
 	{
-		_timer->Stop();
-		delete _timer;
+		FrameElapsed -= std::make_pair(this, TakeTheAction);
+		_controlledChampion->FrameElapsed -= FrameElapsed;
 		_enemyTeam = NULL;
 
 		delete _filter;
 		_filter = NULL;
 	}
 	
-	void ComputerChampionController::TakeTheAction(Application::ITimerParameter* parameter)
+	void ComputerChampionController::TakeTheAction(Application::Object* sender, Application::EventArgs* e, Application::Object* instance)
 	{
-		ComputerChampionController* controller = static_cast<ComputerChampionController*>(parameter);
-		if (*controller->_paused == true)
-			return;
+		ComputerChampionController* controller = static_cast<ComputerChampionController*>(instance);
 		EnemiesFilter* filter = static_cast<EnemiesFilter*>(controller->_filter);
 		if (filter->Filter(controller->_controlledChampion, controller->_enemyTeam).size() > 0)
 			controller->_controlledChampion->Attack(controller->_enemyTeam);

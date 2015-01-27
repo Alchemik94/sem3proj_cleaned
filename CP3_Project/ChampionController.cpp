@@ -2,10 +2,9 @@
 
 namespace Game
 {
-	ChampionController::ChampionController(Champion* controlledChampion, volatile bool* paused)
+	ChampionController::ChampionController(Champion* controlledChampion)
 	{
 		_controlledChampion = controlledChampion;
-		_paused = paused;
 	}
 
 	ChampionController::~ChampionController()

@@ -91,8 +91,9 @@ namespace Application
 		GameHolder* game = new GameHolder();
 
 		ALLEGRO_DISPLAY *display = al_create_display(800, 600);
-		ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();;
-		ALLEGRO_TIMER *timer = al_create_timer(1.0 / 60); // 60 - FPS
+		ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();
+		const double tickTime = 1.0 / SingleDataKeeper::Instance()->GetInt("ticksPerSecond");
+		ALLEGRO_TIMER *timer = al_create_timer(tickTime); // 60 - FPS
 
 
 		ALLEGRO_FONT *arial18 = al_load_ttf_font("Sources/data/arial.ttf", 30, 0);;
@@ -143,23 +144,26 @@ namespace Application
 
 			else if (ev.type == ALLEGRO_EVENT_TIMER)
 			{
-				//champion animation update
-				if (++championImage.frameCount >= championImage.frameDelay)
-				{
-					if (++championImage.curFrame >= championImage.maxFrame)
-						championImage.curFrame = 0;
+				game->FrameElapsed(&ParametrizedObject<MainApplication>(*this), &ParametrizedEventArgs<int>(tickTime));
 
-					championImage.frameCount = 0;
-				}
 
-				//mob animation update
-				if (++mobImage.frameCount >= mobImage.frameDelay)
-				{
-					if (++mobImage.curFrame >= mobImage.maxFrame)
-						mobImage.curFrame = 0;
+				////////champion animation update
+				//////if (++championImage.frameCount >= championImage.frameDelay)
+				//////{
+				//////	if (++championImage.curFrame >= championImage.maxFrame)
+				//////		championImage.curFrame = 0;
 
-					mobImage.frameCount = 0;
-				}
+				//////	championImage.frameCount = 0;
+				//////}
+
+				////////mob animation update
+				//////if (++mobImage.frameCount >= mobImage.frameDelay)
+				//////{
+				//////	if (++mobImage.curFrame >= mobImage.maxFrame)
+				//////		mobImage.curFrame = 0;
+
+				//////	mobImage.frameCount = 0;
+				//////}
 			}
 
 			//Render

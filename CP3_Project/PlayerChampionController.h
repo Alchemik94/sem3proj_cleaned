@@ -12,6 +12,6 @@ namespace Game
 			virtual void CatchedKeyHandler(Application::Keys key);
 			Team* _enemyTeam;
 		public:
-			PlayerChampionController(Champion* controlledChampion, volatile bool* paused, Team* enemyTeam, Application::KeyCatcher* masterKeyCatcher);
+			PlayerChampionController(Champion* controlledChampion, Team* enemyTeam, Application::KeyCatcher* masterKeyCatcher);
 	};
 }

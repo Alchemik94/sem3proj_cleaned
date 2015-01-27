@@ -12,41 +12,43 @@ namespace Game
 {
 //TODO
 //Get rid of hardcode
-	GameHolder::GameHolder()
+	GameHolder::GameHolder() : GameHolder(1)
 	{
-		_paused = true;
-		Show();
+		/*Show();
 		_team1 = new Team();
 		_team1->push_back(new Knight(PlayerKnight));
 		_team2 = new AutogeneratingTeam(5, ReadyPreset::AIKnight);
-		_team1Controllers = std::vector<ChampionController*>{new PlayerChampionController(*_team1->begin(),&_paused,_team2,this), };
+		_team1Controllers = std::vector<ChampionController*>{new PlayerChampionController(*_team1->begin(),_team2,this), };
 		for (auto championPtr = _team2->begin(); championPtr!=_team2->end(); ++championPtr)
-			_team2Controllers.push_back(new ComputerChampionController(*championPtr,&_paused,_team1));
+			_team2Controllers.push_back(new ComputerChampionController(*championPtr,_team1));
 		_roundsNumber = 1;
 		_currentRound = 0;
 		_menu = new PauseMenu(this,this);
 		_running = true;
-		_runner = new std::thread(RoundsRunner, this);
-		PausedGame();
+		FrameElapsed += std::make_pair(this, RoundsChanger);
+		FrameElapsed += _team1->FrameElapsed;
+		FrameElapsed += _team2->FrameElapsed;
+		PausedGame();*/
 	}
 
 //TODO
 //Get rid of hardcode
 	GameHolder::GameHolder(int numberOfRounds)
 	{
-		_paused = true;
 		Show();
 		_team1 = new Team();
 		_team1->push_back(new Knight(PlayerKnight));
 		_team2 = new AutogeneratingTeam(5, ReadyPreset::AIKnight);
-		_team1Controllers = std::vector<ChampionController*>{new PlayerChampionController(*_team1->begin(), &_paused, _team2,this), };
+		_team1Controllers = std::vector<ChampionController*>{new PlayerChampionController(*_team1->begin(), _team2,this), };
 		for (auto championPtr = _team2->begin(); championPtr != _team2->end(); ++championPtr)
-			_team2Controllers.push_back(new ComputerChampionController(*championPtr, &_paused, _team1));
+			_team2Controllers.push_back(new ComputerChampionController(*championPtr, _team1));
 		_roundsNumber = numberOfRounds;
 		_currentRound = 0;
 		_menu = new PauseMenu(this,this);
 		_running = true;
-		_runner = new std::thread(RoundsRunner, this);
+		FrameElapsed += std::make_pair(this,RoundsChanger);
+		FrameElapsed += _team1->FrameElapsed;
+		FrameElapsed += _team2->FrameElapsed;
 		PausedGame();
 	}
 
@@ -54,12 +56,31 @@ namespace Game
 	{
 		Exit();
 		Hide();
-		if (_runner->joinable())
-			_runner->join();
 		if (_team1 != NULL)
+		{
 			delete _team1;
+			_team1 = NULL;
+		}
+
+		for (auto championControllers : _team1Controllers)
+			delete championControllers;
+		_team1Controllers.clear();
+
 		if (_team2 != NULL)
+		{
 			delete _team2;
+			_team2 = NULL;
+		}
+
+		for (auto championControllers : _team2Controllers)
+			delete championControllers;
+		_team2Controllers.clear();
+
+		if (_menu != NULL)
+		{
+			delete _menu;
+			_menu = NULL;
+		}
 	}
 
 	void GameHolder::CatchedKeyHandler(Application::Keys key)
@@ -68,30 +89,31 @@ namespace Game
 			throw "GameHolder cannot catch a key!\n";
 	}
 
-	//TODO
-	//Needs changes for various types of enemies
+//TODO
+//Needs changes for various types of enemies
 	void GameHolder::NewRound(int numberOfEnemies)
 	{
-		LOCK_APPLICATION_VARIABLES(Application::EmptyTimer::Instance());
 //TODO
 //error throwing
 		if (_currentRound++ >= _roundsNumber)
 		{
-			UNLOCK_APPLICATION_VARIABLES;
 			return; //throw an error
 		}
-		UNLOCK_APPLICATION_VARIABLES;
-		while (_team2->size() > 0 && _running) std::this_thread::yield();
 		if (_running)
 		{
-			LOCK_APPLICATION_VARIABLES(Application::EmptyTimer::Instance());
+			//cleaning
 			delete _team2;
-			IGameDisplayer::NewRound();
-			_team2 = new AutogeneratingTeam(numberOfEnemies, AIKnight);
+			for (auto championController : _team2Controllers)
+				delete championController;
 			_team2Controllers.clear();
+
+			//GUI effect
+			IGameDisplayer::NewRound();
+
+			//new round enemy team generating
+			_team2 = new AutogeneratingTeam(numberOfEnemies, AIKnight);
 			for (auto championPtr = _team2->begin(); championPtr != _team2->end(); ++championPtr)
-				_team2Controllers.push_back(new ComputerChampionController(*championPtr, &_paused, _team1));
-			UNLOCK_APPLICATION_VARIABLES;
+				_team2Controllers.push_back(new ComputerChampionController(*championPtr, _team1));
 		}
 		else
 		{
@@ -125,28 +147,7 @@ namespace Game
 
 	void GameHolder::Exit()
 	{
-		Pause();
-		if (_menu!=NULL)
-			_menu->Hide();
 		_running = false;
-		_currentRound = _roundsNumber;
-		if (_runner->joinable())
-			_runner->join();
-		if (_team1 != NULL)
-		{
-			delete _team1;
-			_team1 = NULL;
-		}
-		if (_team2 != NULL)
-		{
-			delete _team2;
-			_team2 = NULL;
-		}
-		if (_menu != NULL)
-		{
-			delete _menu;
-			_menu = NULL;
-		}
 	}
 
 	inline void GameHolder::Pause()
@@ -164,13 +165,16 @@ namespace Game
 		return _running;
 	}
 
-	void GameHolder::RoundsRunner(GameHolder* holder)
+	void GameHolder::RoundsChanger(Application::Object* sender, Application::EventArgs*, Application::Object* instance)
 	{
-		while (holder->_running && holder->_currentRound < holder->_roundsNumber)
-			holder->NewRound(5);
-		LOCK_APPLICATION_VARIABLES(Application::EmptyTimer::Instance());
-		holder->_running = false;
-		UNLOCK_APPLICATION_VARIABLES;
+		GameHolder* holder = dynamic_cast<GameHolder*>(instance);
+		if (holder->_running && holder->_currentRound < holder->_roundsNumber)
+		{
+			if (holder->_team2->size() == 0)
+				holder->NewRound(5);
+		}
+		else
+			holder->Exit();
 	}
 
 //TODO

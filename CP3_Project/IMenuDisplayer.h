@@ -3,12 +3,14 @@
 #include <string>
 #include <vector>
 #include "MenuOptionsEnum.h"
+#include "EventHandler.h"
 
 namespace Display
 {
 	class IMenuDisplayer
 	{
 		public:
+			Application::EventHandler FrameElapsed;
 //TODO
 			virtual void Show()
 			{

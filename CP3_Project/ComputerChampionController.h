@@ -3,24 +3,20 @@
 #include "ChampionController.h"
 #include "Team.h"
 #include "Filter.h"
-#include "Timer.h"
-#include "ITimerParam.h"
 #include <thread>
+#include "EventHandler.h"
 
 namespace Game
 {
-	class ComputerChampionController :public ChampionController, Application::ITimerParameter
+	class ComputerChampionController :public ChampionController, Application::Object
 	{
 		private:
-			Application::Timer* _timer;
 			Team* _enemyTeam;
 			Application::IFilter* _filter;
-			unsigned int LowestSensiblePauseTime(Champion* champion);
-			static void TakeTheAction(Application::ITimerParameter* param);
+			static void TakeTheAction(Application::Object* sender, Application::EventArgs* e, Application::Object* instance);
 		public:
-			ComputerChampionController(Champion* controlledChampion, volatile bool* paused, Team* enemyTeam);
-			virtual void Start();
-			virtual void Stop();
+			Application::EventHandler FrameElapsed;
+			ComputerChampionController(Champion* controlledChampion, Team* enemyTeam);
 			virtual ~ComputerChampionController();
 	};
 }

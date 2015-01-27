@@ -17,7 +17,8 @@ namespace Application
 			{
 				//Some constants used in program
 				KeepInt("distanceBetweenLanes", 20);
-				KeepInt("deadChampionsEraserDelay", 10);
+				KeepInt("ticksPerSecond", 60);
+				KeepInt("numberOfLanes", 1);
 
 				//Key bindings
 				KeepInt("UpKey",Keys::Up);

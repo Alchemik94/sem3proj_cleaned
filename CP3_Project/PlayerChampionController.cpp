@@ -5,7 +5,7 @@
 
 namespace Game
 {
-	PlayerChampionController::PlayerChampionController(Champion* controlledChampion, volatile bool* paused, Team* enemyTeam, Application::KeyCatcher* masterKeyCatcher): ChampionController(controlledChampion, paused), Application::KeyCatcher(masterKeyCatcher)
+	PlayerChampionController::PlayerChampionController(Champion* controlledChampion, Team* enemyTeam, Application::KeyCatcher* masterKeyCatcher): ChampionController(controlledChampion), Application::KeyCatcher(masterKeyCatcher)
 	{
 		_enemyTeam = enemyTeam;
 	}
@@ -13,9 +13,6 @@ namespace Game
 //TODO
 	void PlayerChampionController::CatchedKeyHandler(Application::Keys key)
 	{
-		if (*_paused == true)
-//Error throwing here
-			;
 		const Application::Keys
 			UpKey = (const Application::Keys)Application::SingleDataKeeper::Instance()->GetInt("UpKey"),
 			DownKey = (const Application::Keys)Application::SingleDataKeeper::Instance()->GetInt("DownKey"),

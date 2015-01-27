@@ -5,13 +5,12 @@
 #include "GameEnums.h"
 #include "IFilter.h"
 #include "ActionQueue.h"
-#include "Timer.h"
-#include "ITimerParam.h"
 #include "IChampionDisplayer.h"
+#include "EventHandler.h"
 
 namespace Game
 {
-	class Champion: Application::ITimerParameter, protected virtual Display::IChampionDisplayer
+	class Champion: protected virtual Display::IChampionDisplayer, Application::Object
 	{
 		private:
 			int _currentHealth,
@@ -28,15 +27,9 @@ namespace Game
 				_distanceFromCastle;
 			bool _displayed, _wait;
 			
-			//queue used to move champion
-			ActionQueue<Action, Direction> _actionQueue;
 			//bool letting us to make delays between attacks
-			volatile bool _afterAttack;
-			//timer resetting _afterAttack flag
-			Application::Timer _attackTimer;
-			//timer moving champion with specified speed
-			Application::Timer _moveHandlerTimer;
-
+			int _tillNextAttack;
+			
 			//function returning parameter we want to change
 			int& GetChangingParameter(ChampionParameters param);
 			//function obtaining modification to specified value
@@ -51,10 +44,8 @@ namespace Game
 			//Changes parameters on demand
 			void ChangeStatistics(ChampionParameters param, TypeOfChange type, int change);
 
-			//used in timer to move champion graphics
-			static void MoveHandler(ITimerParameter* champion);
 			//used in timer to reset attack flag
-			static void AttackCounterResetter(ITimerParameter* champion);
+			static void AttackCounterResetter(Application::Object* sender, Application::EventArgs* e, Application::Object* instance);
 			
 //TODO
 			//should be moved to kind of enum converter

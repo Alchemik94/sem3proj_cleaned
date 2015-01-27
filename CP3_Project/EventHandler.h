@@ -6,13 +6,16 @@ namespace Application
 {
 	class Object
 	{
-
+		private:
+			virtual void DoNothing(){}
 	};
 
 	template <class T>
 	class ParametrizedObject : public Object
 	{
 		const T& _member;
+		private:
+			virtual void DoNothing(){}
 		public:
 			ParametrizedObject(const T& object) : _member(object)
 		{
@@ -26,13 +29,16 @@ namespace Application
 
 	class EventArgs: public Object
 	{
-
+		private:
+			virtual void DoNothing(){}
 	};
 
 	template <class T>
 	class ParametrizedEventArgs : public EventArgs
 	{
 		const T& _member;
+		private:
+			virtual void DoNothing(){}
 		public:
 			ParametrizedEventArgs(const T& eventArgs) : _member(eventArgs)
 			{

@@ -1,28 +1,19 @@
-#ifndef _TEAM_DEFINITION
-#define _TEAM_DEFINITION
-
 #include "Team.h"
 #include "EnemiesFilter.h"
-#include "GameEnums.h"
 #include <vector>
 #include "ChampionFactory.h"
-#include "SingleDataKeeper.h"
-#include "Application.h"
 
 namespace Game
 {
-	void Team::EraseDead(ITimerParameter* param)
+	void Team::EraseDead(Application::Object* sender, Application::EventArgs* e, Application::Object* instance)
 	{
-		Team* team = static_cast<Team*>(param);
-		if (team->_faulty) return;
-		LOCK_APPLICATION_VARIABLES(team->_timer);
-		team->_erasing = true;
+		Team* team = dynamic_cast<Team*>(instance);
 		if (team->size() > 0)
 		{
 			EnemiesFilter* filter = new AliveEnemiesFilter();
 			std::vector<Champion*> newTeam;
 			newTeam = filter->Filter(NULL, team);
-			
+
 			if (newTeam.size() != team->size())
 			{
 				for (unsigned int i = 0, j = 0; i < team->size(); ++i)
@@ -36,36 +27,49 @@ namespace Game
 				*team = newTeam;
 			}
 		}
-		team->_erasing = false;
-		UNLOCK_APPLICATION_VARIABLES;
 	}
 
-	Team::Team() :_faulty(false), _timer(Application::SingleDataKeeper::Instance()->GetInt("deadChampionsEraserDelay"), EraseDead, this)
+	Team& Team::operator=(vector<Champion*> champions)
 	{
-		_timer.Run();
+		for (auto champion : *this)
+			FrameElapsed -= champion->FrameElapsed;
+		vector<Champion*>::operator=(champions);
+		for (auto champion : *this)
+			FrameElapsed += champion->FrameElapsed;
 	}
 
-	Team::Team(std::vector<Champion*> team) :_faulty(false), std::vector<Champion*>(team), _timer(Application::SingleDataKeeper::Instance()->GetInt("deadChampionsEraserDelay"), EraseDead, this)
+	void Team::push_back(Champion* champion)
 	{
-		_timer.Run();
+		vector<Champion*>::push_back(champion);
+		FrameElapsed += champion->FrameElapsed;
+	}
+
+	void Team::clear()
+	{
+		for (auto champion : *this)
+			FrameElapsed -= champion->FrameElapsed;
+		vector<Champion*>::clear();
+	}
+
+	void Team::pop_back()
+	{
+		FrameElapsed -= vector<Champion*>::back()->FrameElapsed;
+		vector<Champion*>::pop_back();
+	}
+
+	Team::Team()
+	{
+		FrameElapsed += std::make_pair(this, EraseDead);
 	}
 
 	Team::~Team()
 	{
-		_timer.Stop();
-		_faulty = true;
-		if (!_erasing)
+		FrameElapsed -= std::make_pair(this, EraseDead);
+		for (int i = 0; i < this->size(); ++i)
 		{
-			LOCK_APPLICATION_VARIABLES(Application::EmptyTimer::Instance());
-			if (!_erasing)
-			{
-				for (int i = 0; i < this->size(); ++i)
-				{
-					delete (*this)[i];
-					(*this)[i] = NULL;
-				}
-			}
-			UNLOCK_APPLICATION_VARIABLES;
+			FrameElapsed -= (*this)[i]->FrameElapsed;
+			delete (*this)[i];
+			(*this)[i] = NULL;
 		}
 	}
 
@@ -76,5 +80,3 @@ namespace Game
 			this->push_back(ChampionFactory::CreateChampion(preset));
 	}
 }
-
-#endif

@@ -1,7 +1,7 @@
-#ifndef _ICHAMPIONDISPLAYER_DECLARATION
-#define _ICHAMPIONDISPLAYER_DECLARATION
+#pragma once
 
 #include "GameEnums.h"
+#include "EventHandler.h"
 #include <vector>
 
 namespace Display
@@ -10,6 +10,7 @@ namespace Display
 	class IChampionDisplayer
 	{
 		public:
+			Application::EventHandler FrameElapsed;
 			//Displays attack animation of a champion
 			virtual void DisplayAttack(std::vector<IChampionDisplayer*> filteredEnemies) = 0;
 			//Displays death of a champion and deletes him from map
@@ -65,5 +66,3 @@ namespace Display
 			}
 	};
 }
-
-#endif
