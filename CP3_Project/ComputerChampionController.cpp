@@ -2,6 +2,7 @@
 #include "Algorithms.h"
 #include "EnemiesFilter.h"
 #include "Reinterpreter.h"
+#include "NeuralNetwork.h"
 
 namespace Game
 {

@@ -93,6 +93,8 @@
     <ClInclude Include="KeyboardKeysEnum.h" />
     <ClInclude Include="KeyCatcher.h" />
     <ClInclude Include="MenuOptionsEnum.h" />
+    <ClInclude Include="NeuralNetwork.h" />
+    <ClInclude Include="Neuron.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PlayerChampionController.h">
       <FileType>CppCode</FileType>
@@ -105,6 +107,7 @@
     <ClCompile Include="ChampionController.cpp" />
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionQueue.h" />
