@@ -108,7 +108,7 @@ namespace NeuralNetwork
 			if (structureDescription.size() < 2)
 				throw;
 			network.clear();
-			network.push_back(vector<Neuron<FloatingNumber> >(structureDescription[0]));
+			network.push_back(std::vector<Neuron<FloatingNumber> >(structureDescription[0]));
 			for (int i = 0; i < network[0].size(); ++i)
 			{
 				network[0][i] = Neuron<FloatingNumber>(1);
@@ -116,12 +116,12 @@ namespace NeuralNetwork
 			}
 			for (int i = 1; i < structureDescription.size() - 1; ++i)
 			{
-				network.push_back(vector<Neuron<FloatingNumber> >(structureDescription[i] + 1));
+				network.push_back(std::vector<Neuron<FloatingNumber> >(structureDescription[i] + 1));
 				for (int j = 0; j < network[i].size(); ++j)
 					network[i][j] = Neuron<FloatingNumber>(network[i - 1].size());
 				network[i][structureDescription[i]].type = Bias;
 			}
-			network.push_back(vector<Neuron<FloatingNumber> >(structureDescription[structureDescription.size() - 1]));
+			network.push_back(std::vector<Neuron<FloatingNumber> >(structureDescription[structureDescription.size() - 1]));
 			for (int i = 0; i < network[network.size() - 1].size(); ++i)
 				network[network.size() - 1][i] = Neuron<FloatingNumber>(structureDescription[structureDescription.size() - 2] + 1);
 		}
@@ -172,7 +172,7 @@ namespace NeuralNetwork
 				result.clear();
 				result.resize(network[i].size());
 				for (int j = 0; j < network[i].size(); ++j)
-					result[j] = network[i][j].Use(vector<FloatingNumber>(1, tmp[j]));
+					result[j] = network[i][j].Use(std::vector<FloatingNumber>(1, tmp[j]));
 				tmp = result;
 			}
 			for (int i = 1; i < network.size(); ++i)

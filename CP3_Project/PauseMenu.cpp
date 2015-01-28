@@ -1,6 +1,7 @@
 #include "PauseMenu.h"
 #include "SingleDataKeeper.h"
 #include "GameHolder.h"
+#include "Converter.h"
 
 namespace Game
 {
@@ -67,7 +68,7 @@ namespace Game
 
 	std::string PauseMenu::GetActiveOption()
 	{
-		return Application::SingleDataKeeper::Instance()->GetString("PauseMenuOption"+MenuOptionName(*_activeOption));
+		return Application::SingleDataKeeper::Instance()->GetString("PauseMenuOption"+Application::Converter::MenuOptionName(*_activeOption));
 	}
 
 	std::vector<MenuOption>& PauseMenu::GetOptions()
@@ -82,30 +83,8 @@ namespace Game
 		return result;
 	}
 
-//TODO
-//error throwing
-	std::string PauseMenu::MenuOptionName(MenuOption option)
-	{
-		switch (option)
-		{
-		case Continue:
-			return "Continue";
-		case NewGame:
-			return "NewGame";
-		case Options:
-			return "Options";
-		case Credits:
-			return "Credits";
-		case Exit:
-			return "Exit";
-		default:
-			//throw an error
-			break;
-		}
-	}
-
 	std::string PauseMenu::GetMenuOptionName(MenuOption option)
 	{
-		return MenuOptionName(option);
+		return Application::Converter::MenuOptionName(option);
 	}
 }

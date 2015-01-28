@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KeyboardKeysEnum.h"
+#include "MenuOptionsEnum.h"
 #include "allegro5\allegro.h"
 
 namespace Application
@@ -26,6 +27,25 @@ namespace Application
 						return Keys::Space;
 					default:
 						return Keys::NotAKey;
+				}
+			}
+			static std::string MenuOptionName(Game::MenuOption option)
+			{
+				switch (option)
+				{
+					case Game::MenuOption::Continue:
+						return "Continue";
+					case Game::MenuOption::NewGame:
+						return "New Game";
+					case Game::MenuOption::Options:
+						return "Options";
+					case Game::MenuOption::Credits:
+						return "Credits";
+					case Game::MenuOption::Exit:
+						return "Exit";
+					default:
+						//throw an error
+						break;
 				}
 			}
 	};

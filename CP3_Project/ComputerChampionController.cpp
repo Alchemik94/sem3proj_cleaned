@@ -6,6 +6,8 @@
 
 namespace Game
 {
+	NeuralNetwork::NeuralNetwork<> ComputerChampionController::_network(Application::SingleDataKeeper::Instance()->GetString("NetPath"));
+
 	ComputerChampionController::ComputerChampionController(Champion* controlledChampion, Team* enemyTeam) : ChampionController(controlledChampion)
 	{
 		_enemyTeam = enemyTeam;
@@ -27,10 +29,31 @@ namespace Game
 	void ComputerChampionController::TakeTheAction(Application::Object* sender, Application::EventArgs* e, Application::Object* instance)
 	{
 		ComputerChampionController* controller = static_cast<ComputerChampionController*>(instance);
-		EnemiesFilter* filter = static_cast<EnemiesFilter*>(controller->_filter);
-		if (filter->Filter(controller->_controlledChampion, controller->_enemyTeam).size() > 0)
-			controller->_controlledChampion->Attack(controller->_enemyTeam);
+		auto action = controller->ConsiderOptions();
+		switch (action)
+		{
+			case Game::Action::Attack:
+				controller->_controlledChampion->Attack(controller->_enemyTeam);
+				break;
+			case Game::Action::Move:
+				controller->_controlledChampion->Move(Direction::Left);
+				break;
+		}
+	}
+
+	Game::Action ComputerChampionController::ConsiderOptions()
+	{
+		EnemiesFilter* filter = static_cast<EnemiesFilter*>(_filter);
+
+		long double percentageOfEnemiesInRange = ((long double)filter->Filter(_controlledChampion, _enemyTeam).size()) / ((long double)_enemyTeam->size());
+
+		long double distanceFromCastle = ((long double)_controlledChampion->GetParameter(Game::DistanceFromCastle)) / ((long double)Application::SingleDataKeeper::Instance()->GetInt("gameWidth"));
+
+		auto res = _network.Use(std::vector<long double>({ percentageOfEnemiesInRange,  distanceFromCastle}));
+		
+		if (res[0] > res[1])
+			return Game::Action::Attack;
 		else
-			controller->_controlledChampion->Move(Direction::Left);
+			return Game::Action::Move;
 	}
 }

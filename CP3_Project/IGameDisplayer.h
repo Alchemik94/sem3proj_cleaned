@@ -10,6 +10,7 @@
 #include <string>
 #include "IDisplayer.h"
 #include "EventHandler.h"
+#include "SingleDataKeeper.h"
 
 namespace Display
 {
@@ -36,7 +37,7 @@ namespace Display
 				
 				AllegroModulesInitialization();
 				
-				Display = al_create_display(800, 600);
+				Display = al_create_display(Application::SingleDataKeeper::Instance()->GetInt("gameWidth"), (Application::SingleDataKeeper::Instance()->GetInt("gameHeight")));
 			}
 			
 			virtual void Show()

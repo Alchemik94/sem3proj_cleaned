@@ -5,7 +5,7 @@
 #include <string>
 #include "GameEnums.h"
 #include "KeyboardKeysEnum.h"
-#include "PauseMenu.h"
+#include "Converter.h"
 
 namespace Application
 {
@@ -19,6 +19,8 @@ namespace Application
 				KeepInt("distanceBetweenLanes", 20);
 				KeepInt("ticksPerSecond", 60);
 				KeepInt("numberOfLanes", 1);
+				KeepInt("gameWidth", 800);
+				KeepInt("gameHeight", 600);
 
 				//Key bindings
 				KeepInt("UpKey",Keys::Up);
@@ -29,14 +31,16 @@ namespace Application
 				KeepInt("PauseKey",Keys::Escape);
 				
 				//Menu options names
-				KeepString("PauseMenuOption" + Game::PauseMenu::MenuOptionName(Game::MenuOption::Continue),"Continue");
-				KeepString("PauseMenuOption" + Game::PauseMenu::MenuOptionName(Game::MenuOption::Credits), "Credits");
-				KeepString("PauseMenuOption" + Game::PauseMenu::MenuOptionName(Game::MenuOption::Exit), "Exit");
-				KeepString("PauseMenuOption" + Game::PauseMenu::MenuOptionName(Game::MenuOption::NewGame), "New game");
-				KeepString("PauseMenuOption" + Game::PauseMenu::MenuOptionName(Game::MenuOption::Options), "Options");
+				KeepString("PauseMenuOption" + Converter::MenuOptionName(Game::MenuOption::Continue),"Continue");
+				KeepString("PauseMenuOption" + Converter::MenuOptionName(Game::MenuOption::Credits), "Credits");
+				KeepString("PauseMenuOption" + Converter::MenuOptionName(Game::MenuOption::Exit), "Exit");
+				KeepString("PauseMenuOption" + Converter::MenuOptionName(Game::MenuOption::NewGame), "New game");
+				KeepString("PauseMenuOption" + Converter::MenuOptionName(Game::MenuOption::Options), "Options");
 
 				KeepString("BackgroundImagePath", "background.png");
 				KeepString("MenuBackgroundPath", "menu.png");
+
+				KeepString("NetPath", "ai.net");
 
 				//To change
 				SavePreset(Game::ReadyPreset::AIKnight, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);

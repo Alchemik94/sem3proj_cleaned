@@ -9,11 +9,13 @@
 #include "GameHolder.h"
 #include "Sprite.h"
 
+#include "NeuralNetwork.h"
+
 namespace Application
 {
 	MainApplication::MainApplication()
 	{
-
+		
 	}
 
 	int MainApplication::Run()

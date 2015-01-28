@@ -19,7 +19,6 @@ namespace Game
 			virtual std::string GetActiveOption();
 			virtual std::vector<MenuOption>& GetOptions();
 			virtual std::string GetMenuOptionName(MenuOption option);
-			static std::string MenuOptionName(MenuOption option);
 			~PauseMenu();
 	};
 }
