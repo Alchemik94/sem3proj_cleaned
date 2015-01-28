@@ -1,5 +1,4 @@
-#ifndef _GAMEHOLDER_DECLARATION
-#define _GAMEHOLDER_DECLARATION
+#pragma once
 
 #include "IGameDisplayer.h"
 #include "Champion.h"
@@ -14,7 +13,7 @@
 
 namespace Game
 {
-	class GameHolder: public Display::IGameDisplayer, public Application::KeyCatcher, public Application::Object
+	class GameHolder: public Display::IGameDisplayer, public Application::KeyCatcher
 	{
 		private:
 			Team* _team1;
@@ -34,7 +33,6 @@ namespace Game
 			std::vector<ChampionController*> _team2Controllers;
 			virtual void CatchedKeyHandler(Application::Keys key);
 		public:
-			GameHolder();
 			GameHolder(int numberOfRounds);
 			virtual ~GameHolder();
 			virtual void NewRound(int numberOfEnemies);
@@ -48,5 +46,3 @@ namespace Game
 			virtual void Exit();
 	};
 }
-
-#endif

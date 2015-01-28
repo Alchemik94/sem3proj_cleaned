@@ -28,7 +28,7 @@ namespace Game
 	
 	void ComputerChampionController::TakeTheAction(Application::Object* sender, Application::EventArgs* e, Application::Object* instance)
 	{
-		ComputerChampionController* controller = static_cast<ComputerChampionController*>(instance);
+		ComputerChampionController* controller = dynamic_cast<ComputerChampionController*>(instance);
 		auto action = controller->ConsiderOptions();
 		switch (action)
 		{

@@ -82,7 +82,6 @@
     <ClCompile Include="EnemiesFilter.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameHolder.cpp" />
-    <ClCompile Include="ITimerParam.h" />
     <ClCompile Include="KeyCatcher.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClInclude Include="Algorithms.h" />
@@ -106,11 +105,9 @@
     <ClCompile Include="IKnightDisplayer.h" />
     <ClCompile Include="ChampionController.cpp" />
     <ClCompile Include="Team.cpp" />
-    <ClCompile Include="Timer.cpp" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActionQueue.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Champion.h" />
     <ClInclude Include="ChampionController.h" />
@@ -127,7 +124,6 @@
     <ClInclude Include="SingleDataKeeper.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Team.h" />
-    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

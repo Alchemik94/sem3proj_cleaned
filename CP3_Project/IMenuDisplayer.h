@@ -4,6 +4,7 @@
 #include <vector>
 #include "MenuOptionsEnum.h"
 #include "EventHandler.h"
+#include "IDisplayer.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
@@ -12,7 +13,7 @@
 
 namespace Display
 {
-	class IMenuDisplayer
+	class IMenuDisplayer: public IDisplayer
 	{
 		private:
 			std::string _texturePath;
@@ -46,7 +47,6 @@ namespace Display
 
 			virtual void Refresh()
 			{
-				//this function must be implemented to create instance of menu - it may be like this:
 				OptionChanged();
 			}
 

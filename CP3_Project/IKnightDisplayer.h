@@ -11,7 +11,7 @@
 
 namespace Display
 {
-	class IKnightDisplayer : public virtual IChampionDisplayer, Application::Object
+	class IKnightDisplayer : public virtual IChampionDisplayer
 	{
 		public:
 			IKnightDisplayer(std::string path) : IChampionDisplayer(path)
@@ -32,8 +32,7 @@ namespace Display
 
 			virtual void DisplayDeath()
 			{
-				//TODO
-				//when it ends, it would be great to autohide champion dying:
+				//possible to add more effects
 				Hide();
 			}
 			

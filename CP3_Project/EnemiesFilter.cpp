@@ -1,6 +1,3 @@
-#ifndef _ENEMIES_FILTER_DEFINITION
-#define _ENEMIES_FILTER_DEFINITION
-
 #include "EnemiesFilter.h"
 #include "SingleDataKeeper.h"
 #include <math.h>
@@ -89,5 +86,3 @@ namespace Game
 		return EnemiesFilter::Filter(attackingChampion, &filtered);
 	}
 }
-
-#endif

@@ -17,7 +17,7 @@
 namespace Display
 {
 	//Interface to define graphics. ChampionType has to implement IChampionDisplayer.
-	class IChampionDisplayer: IDisplayer, public Application::Object
+	class IChampionDisplayer: public virtual IDisplayer
 	{
 		private:
 			std::string _textureLocation;
@@ -61,19 +61,21 @@ namespace Display
 			//Displays that champion is being attacked
 			virtual void DisplayBeingAttacked()
 			{
-				//TODO
+				//possible effect to be added
 			}
 			
 			//Displays change in current health
 			virtual void DisplayCurrentHealthChange(Game::TypeOfChange type, int change)
 			{
-				//TODO
+				//possible effect to be added
+				Refresh();
 			}
 			
 			//Displays change in maximum health
 			virtual void DisplayMaximumHealthChange(Game::TypeOfChange type, int change)
 			{
-				//TODO - maybe as DisplayCurrentHealthChange if whole health bar will possibly be updated?
+				//possible effect to be added
+				Refresh();
 			}
 			
 			//Shows champion on map

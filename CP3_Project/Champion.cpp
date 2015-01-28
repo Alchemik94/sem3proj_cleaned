@@ -1,11 +1,9 @@
-#ifndef _CHAMPION_INTERFACE_DEFINITION
-#define _CHAMPION_INTERFACE_DEFINITION
-
 #include "Champion.h"
 #include "EnemiesFilter.h"
 #include "SingleDataKeeper.h"
 #include "Application.h"
 #include "Reinterpreter.h"
+#include "Converter.h"
 
 #include <cstdio>
 #include <string>
@@ -56,8 +54,7 @@ namespace Game
 				return -change;
 				break;
 			default:
-//TODO
-				//error throwing
+				throw "Unknown modification.";
 				break;
 		}
 	}
@@ -103,8 +100,7 @@ namespace Game
 				return _range;
 				break;
 			default:
-//TODO
-				//error throwing
+				throw "Unknown parameter changing.";
 				break;
 		}
 	}
@@ -145,7 +141,7 @@ namespace Game
 			case ChampionParameters::MaximumHealth:
 				DisplayMaximumHealthChange(type,change);
 				break;
-//TODO
+
 			//may be implemented in further versions
 			case ChampionParameters::CurrentPower:
 				break;
@@ -155,7 +151,7 @@ namespace Game
 				break;
 			case ChampionParameters::MaximumPower:
 				break;
-			//not necessarily displayed
+			//not necessarily even displayed
 			case ChampionParameters::AttackSpeed:
 			case ChampionParameters::BasicDamage:
 			case ChampionParameters::MovementSpeed:
@@ -193,7 +189,7 @@ namespace Game
 
 	void Champion::AttackCounterResetter(Application::Object* sender, Application::EventArgs* e, Application::Object* instance)
 	{
-		Champion* champion = static_cast<Champion*>(instance);
+		Champion* champion = dynamic_cast<Champion*>(instance);
 		if (champion->_tillNextAttack>0)
 			--champion->_tillNextAttack;
 	}
@@ -214,38 +210,6 @@ namespace Game
 			//do nothing
 		}
 		else
-			ChangeStatistics(DirectionToParams(direction).first, DirectionToParams(direction).second, 1);
-	}
-
-	std::pair<ChampionParameters, TypeOfChange> Champion::DirectionToParams(Direction direction)
-	{
-		std::pair<ChampionParameters, TypeOfChange> params;
-		switch (direction)
-		{
-			case Direction::Down:
-				params.first = Lane;
-				params.second = Loose;
-				break;
-			case Direction::Left:
-				params.first = DistanceFromCastle;
-				params.second = Loose;
-				break;
-			case Direction::Right:
-				params.first = DistanceFromCastle;
-				params.second = Gain;
-				break;
-			case Direction::Up:
-				params.first = Lane;
-				params.second = Gain;
-				break;
-			case Direction::None:
-			default:
-//TODO
-				//throw an error!
-				break;
-		}
-		return params;
+			ChangeStatistics(Application::Converter::DirectionToParams(direction).first, Application::Converter::DirectionToParams(direction).second, 1);
 	}
 }
-
-#endif

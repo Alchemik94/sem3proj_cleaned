@@ -79,7 +79,7 @@ namespace Game
 		}
 	}
 
-//TODO - for example choosing random presets from the list of them
+	//NOTE: may be expanded for example to choosing random presets from the list of them
 	AutogeneratingTeam::AutogeneratingTeam(int size, ReadyPreset preset) : Team()
 	{
 		for (int i = 0; i < size; ++i)

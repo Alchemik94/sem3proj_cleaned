@@ -4,7 +4,7 @@
 
 namespace Display
 {
-	class IDisplayer: Application::Object
+	class IDisplayer: public virtual Application::Object
 	{
 		public:
 			virtual void Show() = 0;

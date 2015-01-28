@@ -1,5 +1,4 @@
-#ifndef _KNIGHT_DECLARATION
-#define _KNIGHT_DECLARATION
+#pragma once
 
 #include "Champion.h"
 #include "IKnightDisplayer.h"
@@ -14,5 +13,3 @@ namespace Game
 			Knight(ReadyPreset preset);
 	};
 }
-
-#endif

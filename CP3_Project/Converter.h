@@ -2,6 +2,7 @@
 
 #include "KeyboardKeysEnum.h"
 #include "MenuOptionsEnum.h"
+#include "GameEnums.h"
 #include "allegro5\allegro.h"
 
 namespace Application
@@ -47,6 +48,34 @@ namespace Application
 						//throw an error
 						break;
 				}
+			}
+			static std::pair<Game::ChampionParameters, Game::TypeOfChange> DirectionToParams(Game::Direction direction)
+			{
+				std::pair<Game::ChampionParameters, Game::TypeOfChange> params;
+				switch (direction)
+				{
+				case Game::Direction::Down:
+					params.first = Game::Lane;
+					params.second = Game::Loose;
+					break;
+				case Game::Direction::Left:
+					params.first = Game::DistanceFromCastle;
+					params.second = Game::Loose;
+					break;
+				case Game::Direction::Right:
+					params.first = Game::DistanceFromCastle;
+					params.second = Game::Gain;
+					break;
+				case Game::Direction::Up:
+					params.first = Game::Lane;
+					params.second = Game::Gain;
+					break;
+				case Game::Direction::None:
+				default:
+					throw "Unknown direction.";
+					break;
+				}
+				return params;
 			}
 	};
 }

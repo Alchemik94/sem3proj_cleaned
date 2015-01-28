@@ -20,15 +20,10 @@ namespace Application
 
 	int MainApplication::Run()
 	{
-		return 0;
-	}
-
-	void MainApplication::Test()
-	{
 		using namespace Display;
-		
 		using namespace Game;
-		GameHolder* game = new GameHolder();
+
+		GameHolder* game = new GameHolder(1);
 
 		ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();
 		const double tickTime = 1.0 / SingleDataKeeper::Instance()->GetInt("ticksPerSecond");
@@ -75,10 +70,17 @@ namespace Application
 			al_wait_for_event(event_queue, &ev);
 			al_flush_event_queue(event_queue);
 		}
-		
+
 		al_destroy_event_queue(event_queue);
 		al_destroy_timer(timer);
-	
+
 		delete game;
+
+		return 0;
+	}
+
+	void MainApplication::Test()
+	{
+		
 	}
 }

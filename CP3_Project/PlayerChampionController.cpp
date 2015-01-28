@@ -10,7 +10,7 @@ namespace Game
 		_enemyTeam = enemyTeam;
 	}
 
-//TODO
+	//NOTE: May be expanded to allow user use more options, when decided to let him have his own keyboard presets
 	void PlayerChampionController::CatchedKeyHandler(Application::Keys key)
 	{
 		const Application::Keys

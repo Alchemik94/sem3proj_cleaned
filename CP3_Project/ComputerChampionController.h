@@ -9,7 +9,7 @@
 
 namespace Game
 {
-	class ComputerChampionController :public ChampionController, public Application::Object
+	class ComputerChampionController :public ChampionController, public virtual Application::Object
 	{
 		private:
 			static NeuralNetwork::NeuralNetwork<> _network;

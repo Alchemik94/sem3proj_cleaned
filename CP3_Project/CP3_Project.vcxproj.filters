@@ -51,16 +51,10 @@
     <ClCompile Include="IKnightDisplayer.h">
       <Filter>Header Files\Display</Filter>
     </ClCompile>
-    <ClCompile Include="ITimerParam.h">
-      <Filter>Header Files\Application</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="SingleDataKeeper.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="EnemiesFilter.cpp">
@@ -113,14 +107,8 @@
     <ClInclude Include="SingleDataKeeper.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files\Application</Filter>
-    </ClInclude>
     <ClInclude Include="Champion.h">
       <Filter>Header Files\Game\ChampionTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="ActionQueue.h">
-      <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="ChampionFactory.h">
       <Filter>Header Files\Game</Filter>

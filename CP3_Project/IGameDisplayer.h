@@ -14,7 +14,7 @@
 
 namespace Display
 {
-	class IGameDisplayer: IDisplayer, Application::Object
+	class IGameDisplayer: public IDisplayer
 	{
 		private:
 			std::string _texturePath;
@@ -54,7 +54,8 @@ namespace Display
 
 			virtual void Refresh()
 			{
-
+				Hide();
+				Show();
 			}
 
 			virtual int RoundsNumber() = 0;
@@ -62,7 +63,7 @@ namespace Display
 			
 			virtual void NewRound()
 			{
-			
+				//possible effect to be added here
 			}
 
 			~IGameDisplayer()

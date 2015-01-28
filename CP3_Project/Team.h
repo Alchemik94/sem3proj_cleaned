@@ -1,5 +1,4 @@
-#ifndef _TEAM_DECLARATION
-#define _TEAM_DECLARATION
+#pragma once
 
 #include "Champion.h"
 #include <vector>
@@ -8,7 +7,7 @@
 
 namespace Game
 {
-	class Team: public std::vector<Champion*>, public Application::Object
+	class Team: public std::vector<Champion*>, public virtual Application::Object
 	{
 		private:
 			static void EraseDead(Application::Object* sender, Application::EventArgs* e, Application::Object* instance);
@@ -28,5 +27,3 @@ namespace Game
 			AutogeneratingTeam(int size, ReadyPreset preset);
 	};
 }
-
-#endif

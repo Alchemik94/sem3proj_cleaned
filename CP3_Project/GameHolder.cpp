@@ -1,38 +1,11 @@
-#ifndef _GAMEHOLDER_DEFINITION
-#define _GAMEHOLDER_DEFINITION
-
 #include "GameHolder.h"
 #include "Application.h"
-#include "Timer.h"
 #include "PlayerChampionController.h"
 #include "ComputerChampionController.h"
 #include "Knight.h"
 
 namespace Game
 {
-//TODO
-//Get rid of hardcode
-	GameHolder::GameHolder() : GameHolder(1)
-	{
-		/*Show();
-		_team1 = new Team();
-		_team1->push_back(new Knight(PlayerKnight));
-		_team2 = new AutogeneratingTeam(5, ReadyPreset::AIKnight);
-		_team1Controllers = std::vector<ChampionController*>{new PlayerChampionController(*_team1->begin(),_team2,this), };
-		for (auto championPtr = _team2->begin(); championPtr!=_team2->end(); ++championPtr)
-			_team2Controllers.push_back(new ComputerChampionController(*championPtr,_team1));
-		_roundsNumber = 1;
-		_currentRound = 0;
-		_menu = new PauseMenu(this,this);
-		_running = true;
-		FrameElapsed += std::make_pair(this, RoundsChanger);
-		FrameElapsed += _team1->FrameElapsed;
-		FrameElapsed += _team2->FrameElapsed;
-		PausedGame();*/
-	}
-
-//TODO
-//Get rid of hardcode
 	GameHolder::GameHolder(int numberOfRounds) : IGameDisplayer(Application::SingleDataKeeper::Instance()->GetString("BackgroundImagePath"))
 	{
 		Show();
@@ -89,15 +62,12 @@ namespace Game
 			throw "GameHolder cannot catch a key!\n";
 	}
 
-//TODO
-//Needs changes for various types of enemies
+	//NOTE: Needs changes in the case of various types of enemies
 	void GameHolder::NewRound(int numberOfEnemies)
 	{
-//TODO
-//error throwing
 		if (_currentRound++ >= _roundsNumber)
 		{
-			return; //throw an error
+			throw "Rounds number exceeded.";
 		}
 		if (_running)
 		{
@@ -177,12 +147,9 @@ namespace Game
 			holder->Exit();
 	}
 
-//TODO
-//More players case
+	//NOTE: At more players case it may be greatly expanded
 	Application::KeyCatcher* GameHolder::GetPlayerController()
 	{
 		return dynamic_cast<Application::KeyCatcher*>(*_team1Controllers.begin());
 	}
 }
-
-#endif

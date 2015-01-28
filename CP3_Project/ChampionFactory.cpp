@@ -5,6 +5,7 @@
 
 namespace Game
 {
+	//NOTE: In the case of more champion types it would greatly expand
 	Champion* ChampionFactory::CreateChampion(ReadyPreset preset)
 	{
 		switch (preset)
@@ -13,7 +14,7 @@ namespace Game
 			case ReadyPreset::PlayerKnight:
 				return new Knight(preset);
 			default:
-				//throw an error
+				throw "Unknown champion preset.";
 				break;
 		}
 	}

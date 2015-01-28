@@ -1,5 +1,4 @@
-#ifndef _CHAMPIONFACTORY_DECLARATION
-#define _CHAMPIONFACTORY_DECLARATION
+#pragma once
 
 #include "Champion.h"
 #include "Knight.h"
@@ -15,5 +14,3 @@ namespace Game
 			static Champion* CreateChampion(ReadyPreset preset);
 	};
 }
-
-#endif

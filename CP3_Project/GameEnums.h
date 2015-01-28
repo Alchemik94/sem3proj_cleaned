@@ -1,5 +1,4 @@
-#ifndef _GAMEENUMS_DEFINITION
-#define _GAMEENUMS_DEFINITION 
+#pragma once
 
 namespace Game
 {
@@ -43,10 +42,8 @@ namespace Game
 
 	enum ReadyPreset
 	{
-		//any preset declared here have to be added as an entry in SingleDataKeeper constructor
+		//any preset declared here has to be added as an entry in SingleDataKeeper constructor
 		PlayerKnight,
 		AIKnight,
 	};
 }
-
-#endif
