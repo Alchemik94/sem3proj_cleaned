@@ -26,7 +26,7 @@ namespace Display
 
 			virtual void Show()
 			{
-				_arial18 = al_load_ttf_font("Sources/data/arial.ttf", 30, 0);
+				_arial18 = al_load_ttf_font("arial.ttf", 30, 0);
 				auto options = GetOptions();
 				int i = 0;
 				for (auto option : options)

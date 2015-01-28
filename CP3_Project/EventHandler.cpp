@@ -2,6 +2,11 @@
 
 namespace Application
 {
+	EventHandler::EventHandler() : _functions(), _objectFunctions(), _anotherHandlers()
+	{
+
+	}
+
 	void EventHandler::operator()(Object* sender, EventArgs* e) const
 	{
 		auto functionIt = _functions.begin();
@@ -12,10 +17,13 @@ namespace Application
 			if (functionIt == _functions.end() && handlerIt == _anotherHandlers.end())
 			{
 				objectFunctionIt->second.second(sender, e, objectFunctionIt->second.first);
-				objectFunctionIt++;
+				++objectFunctionIt;
 			}
 			else if (functionIt == _functions.end() && objectFunctionIt == _objectFunctions.end())
-				handlerIt++->second(sender, e);
+			{
+				handlerIt->second->operator()(sender, e);
+				++handlerIt;
+			}
 			else if (objectFunctionIt == _objectFunctions.end() && handlerIt == _anotherHandlers.end())
 				functionIt++->second(sender, e);
 			else if (functionIt == _functions.end())
@@ -23,17 +31,23 @@ namespace Application
 				if (objectFunctionIt->first < handlerIt->first)
 				{
 					objectFunctionIt->second.second(sender, e, objectFunctionIt->second.first);
-					objectFunctionIt++;
+					++objectFunctionIt;
 				}
 				else
-					handlerIt++->second(sender, e);
+				{
+					handlerIt->second->operator()(sender, e);
+					++handlerIt;
+				}
 			}
 			else if (objectFunctionIt == _objectFunctions.end())
 			{
 				if (functionIt->first < handlerIt->first)
 					functionIt++->second(sender, e);
 				else
-					handlerIt++->second(sender, e);
+				{
+					handlerIt->second->operator()(sender, e);
+					++handlerIt;
+				}
 			}
 			else if (handlerIt == _anotherHandlers.end())
 			{
@@ -42,7 +56,7 @@ namespace Application
 				else
 				{
 					objectFunctionIt->second.second(sender, e, objectFunctionIt->second.first);
-					objectFunctionIt++;
+					++objectFunctionIt;
 				}
 			}
 			else
@@ -52,7 +66,7 @@ namespace Application
 					if (objectFunctionIt->first < functionIt->first)
 					{
 						objectFunctionIt->second.second(sender, e, objectFunctionIt->second.first);
-						objectFunctionIt++;
+						++objectFunctionIt;
 					}
 					else
 						functionIt++->second(sender, e);
@@ -60,7 +74,10 @@ namespace Application
 				else
 				{
 					if (handlerIt->first < functionIt->first)
-						handlerIt++->second(sender, e);
+					{
+						handlerIt->second->operator()(sender, e);
+						++handlerIt;
+					}
 					else
 						functionIt++->second(sender, e);
 				}
@@ -89,9 +106,9 @@ namespace Application
 #undef MAX
 	}
 
-	const EventHandler& EventHandler::operator+=(const EventHandler& handler)
+	const EventHandler& EventHandler::operator+=(EventHandler& handler)
 	{
-		_anotherHandlers.push_back(std::make_pair<int, const EventHandler&>(BiggestIndex()+1, handler));
+		_anotherHandlers.push_back(std::make_pair<int, EventHandler*>(BiggestIndex()+1, &handler));
 		return *this;
 	}
 
@@ -118,10 +135,10 @@ namespace Application
 		return false;
 	}
 
-	const EventHandler& EventHandler::operator-=(const EventHandler& handler)
+	const EventHandler& EventHandler::operator-=(EventHandler& handler)
 	{
 		auto handlerIt = _anotherHandlers.begin();
-		for (; handlerIt != _anotherHandlers.end() && handlerIt->second != handler; ++handlerIt);
+		for (; handlerIt != _anotherHandlers.end() && *(handlerIt->second) != handler; ++handlerIt);
 		if (handlerIt != _anotherHandlers.end())
 			_anotherHandlers.erase(handlerIt);
 		return *this;

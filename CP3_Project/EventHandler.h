@@ -57,14 +57,16 @@ namespace Application
 			typedef void(*ObjectFunction)(Object*, EventArgs*,Object*);
 			std::list<std::pair<int,const Function> > _functions;
 			std::list<std::pair<int, std::pair<Object*, ObjectFunction> > > _objectFunctions;
-			std::list<std::pair<int,const EventHandler&> > _anotherHandlers;
+			std::list<std::pair<int,EventHandler*> > _anotherHandlers;
 			int BiggestIndex();
 		public:
+			EventHandler();
+
 			//Called when such an event occurs
 			void operator()(Object* sender, EventArgs* e) const;
 			
 			//Adds another event handler to handle an event
-			const EventHandler& operator+=(const EventHandler& handler);
+			const EventHandler& operator+=(EventHandler& handler);
 
 			//Adds another function to handle the event
 			const EventHandler& operator+=(const Function function);
@@ -76,7 +78,7 @@ namespace Application
 			bool operator!=(const EventHandler& handler) const;
 
 			//Unregisters handler from handler
-			const EventHandler& operator-=(const EventHandler& handler);
+			const EventHandler& operator-=(EventHandler& handler);
 
 			//Checks if the handlers are the same handler
 			bool operator==(const EventHandler& handler) const;

@@ -83,7 +83,7 @@ namespace Display
 
 				al_draw_bitmap_region(_championImage.image, _championImage.curFrame * _championImage.frameWidth, _championImage.curRow * _championImage.frameHeight, _championImage.frameWidth, _championImage.frameHeight, GetParameter(Game::ChampionParameters::DistanceFromCastle), (GetParameter(Game::ChampionParameters::Lane) - 1)*Application::SingleDataKeeper::Instance()->GetInt("distanceBetweenLanes") + 300, 0);
 
-				_arial18 = al_load_ttf_font("Sources/data/arial.ttf", 30, 0);
+				_arial18 = al_load_ttf_font("arial.ttf", 30, 0);
 				//champion healthbar
 				al_draw_textf(_arial18, al_map_rgb(255, 255, 255), 20, 20, 0, "HP  %d/%d",GetParameter(Game::ChampionParameters::CurrentHealth),GetParameter(Game::ChampionParameters::MaximumHealth));
 

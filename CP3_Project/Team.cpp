@@ -21,7 +21,11 @@ namespace Game
 					if (j<newTeam.size() && (*team)[i] == newTeam[j])
 						++j;
 					else
+					{
+						team->FrameElapsed -= (*team)[i]->FrameElapsed;
 						delete (*team)[i];
+						(*team)[i] = NULL;
+					}
 				}
 
 				*team = newTeam;
@@ -32,7 +36,8 @@ namespace Game
 	Team& Team::operator=(vector<Champion*> champions)
 	{
 		for (auto champion : *this)
-			FrameElapsed -= champion->FrameElapsed;
+			if (champion!=NULL)
+				FrameElapsed -= champion->FrameElapsed;
 		vector<Champion*>::operator=(champions);
 		for (auto champion : *this)
 			FrameElapsed += champion->FrameElapsed;
